@@ -54,6 +54,9 @@ jobs:
       - name: Run apk upgrade
         run: docker exec multiarch apk upgrade --repository=${{ env.CDN }}
 
+      - name: Reinstall ca-certificates-bundle (Fixes https://gitlab.alpinelinux.org/alpine/apk-tools/-/issues/10767)
+        run: docker exec multiarch apk add ca-certificates-bundle --repository=${{ env.CDN }}
+
       - name: Run apk to install the core build dependencies
         run: docker exec multiarch apk add build-base pkgconf autoconf automake curl libtool git tar curl perl openssl-dev openssl-libs-static linux-headers
 
